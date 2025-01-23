@@ -1,7 +1,7 @@
 function App() {
   return (
     <>
-      <p>
+      <p className="text-6xl text-red-500">
         App Products para API Express+Sequelize
       </p>
     </>
