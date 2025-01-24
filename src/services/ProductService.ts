@@ -14,7 +14,7 @@ export async function addProduct(data: ProductData) {
         })
         if (result.success) {
             //console.log(result.output) // mostrar los datos validados
-            const url = `${import.meta.env}/api/products`
+            const url = `${import.meta.env.VITE_API_URL}/api/products`
             await axios.post(url, {
                 name: result.output.name,
                 price: result.output.price
@@ -23,6 +23,6 @@ export async function addProduct(data: ProductData) {
         else
             throw new Error('Datos no válidos')
     } catch (error) {
-
+        console.log(error)
     }
 }
