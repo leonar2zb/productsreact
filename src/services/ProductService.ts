@@ -58,6 +58,21 @@ export async function getProductById(id: Product['id']) {
 }
 
 export async function updateProduct(data: ProductData, id: Product['id']) {
+    try {
+        const result = safeParse(ProductSchema, {
+            ...data, id,
+            price: Number(data.price),
+            availability: data.availability == 'true'
+        })
+        if (result.success) {
+
+        }
+        else
+            throw new Error('Datos incoherentes')
+    } catch (error) {
+        console.log(error)
+    }
+
     console.log(data)
     console.log(id)
 }
