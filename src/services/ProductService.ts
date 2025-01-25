@@ -26,3 +26,15 @@ export async function addProduct(data: ProductData) {
         console.log(error)
     }
 }
+
+export async function getProducts() {
+    try {
+        const url = `${import.meta.env.VITE_API_URL}/api/products`
+        const { data } = await axios(url)
+        console.log(data)
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
