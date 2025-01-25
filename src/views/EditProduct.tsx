@@ -1,11 +1,17 @@
-import { Link, Form, ActionFunctionArgs, useActionData, redirect, LoaderFunctionArgs } from "react-router-dom"
+import { Link, Form, ActionFunctionArgs, useActionData, redirect, LoaderFunctionArgs, useLoaderData } from "react-router-dom"
 import ErrorMessage from "../components/ErrorMessage"
-import { addProduct } from "../services/ProductService"
+import { addProduct, getProductById } from "../services/ProductService"
 import { Product } from "../types"
 
 export async function loader({ params }: LoaderFunctionArgs) {
-    console.log(params.id) // parámetro id de la URL
-    return {}
+    const { id } = params // parámetro id de la URL
+    if (id !== undefined) {
+        const product = await getProductById(+id)
+        if (!product)
+            //throw new Response('', { status: 404, statusText: 'No encontrado' })
+            redirect('/')
+        return product
+    }
 }
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -23,14 +29,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function EditProduct() {
     const error = useActionData() as string
-    // Provicionalmente un producto de prueba para evitar errores
-    const product: Product = {
-        id: 1,
-        name: 'Prueba',
-        availability: true,
-        price: 300
-    }
-    console.log(product.name)
+    const product = useLoaderData<Product>()
 
     return (<>
         <div className="flex justify-between">
