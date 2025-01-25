@@ -65,14 +65,12 @@ export async function updateProduct(data: ProductData, id: Product['id']) {
             availability: data.availability == 'true'
         })
         if (result.success) {
-
+            const url = `${import.meta.env.VITE_API_URL}/api/products/${id}`
+            await axios.put(url, result.output)
         }
         else
             throw new Error('Datos incoherentes')
     } catch (error) {
         console.log(error)
     }
-
-    console.log(data)
-    console.log(id)
 }
