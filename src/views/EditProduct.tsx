@@ -1,7 +1,12 @@
-import { Link, Form, ActionFunctionArgs, useActionData, redirect, useLocation } from "react-router-dom"
+import { Link, Form, ActionFunctionArgs, useActionData, redirect, LoaderFunctionArgs } from "react-router-dom"
 import ErrorMessage from "../components/ErrorMessage"
 import { addProduct } from "../services/ProductService"
 import { Product } from "../types"
+
+export async function loader({ params }: LoaderFunctionArgs) {
+    console.log(params.id) // parámetro id de la URL
+    return {}
+}
 
 export async function action({ request }: ActionFunctionArgs) {
     const data = Object.fromEntries(await request.formData())
@@ -18,8 +23,13 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function EditProduct() {
     const error = useActionData() as string
-    const { state } = useLocation()
-    const product = state.product as Product
+    // Provicionalmente un producto de prueba para evitar errores
+    const product: Product = {
+        id: 1,
+        name: 'Prueba',
+        availability: true,
+        price: 300
+    }
     console.log(product.name)
 
     return (<>
