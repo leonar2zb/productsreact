@@ -13,7 +13,8 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 element: <Products />,
-                loader: productsLoader
+                loader: productsLoader,
+                hydrateFallbackElement: <p>Cargando, espere...</p>
             },
             {
                 element: <NewProduct />,
